@@ -12,10 +12,11 @@ import java.util.*;
 
 public class MiniHttpServer {
     public static void main(String[] args) throws Exception {
-        String serverIP = "0.0.0.0";
+        String serverIP = "192.168.1.175"; // IP LAN của máy 1
         int port = 8080;
         HttpServer server = HttpServer.create(new InetSocketAddress(serverIP, port), 0);
-        System.out.println("✅ Server started at http://localhost:8080/travel");
+        System.out.println("✅ Server started at http://" + serverIP + ":" + port + "/travel");
+
 
         // Context cho trang chính TravelPro
         server.createContext("/travel", new TravelHandler());
@@ -237,7 +238,7 @@ public class MiniHttpServer {
   </main>
 </body>
 </html>
-""".formatted(escapeHtml(name), escapeHtml(answer));
+""".formatted(name, answer);
 
             sendResponse(exchange, 200, html);
         }
@@ -255,11 +256,6 @@ public class MiniHttpServer {
 
     private static String decode(String s) {
         return java.net.URLDecoder.decode(s, StandardCharsets.UTF_8);
-    }
-
-    private static String escapeHtml(String s) {
-        if (s == null) return "";
-        return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#x27;");
     }
 
     private static void sendHeadersOnly(HttpExchange exchange, int status) throws IOException {
