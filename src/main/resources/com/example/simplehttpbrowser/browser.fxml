@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.WebView?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.simplehttpbrowser.controller.BrowserController"
+            stylesheets="/com/example/simplehttpbrowser/style.css">
+
+    <!-- LEFT SIDEBAR: Controls -->
+    <left>
+        <VBox fx:id="leftPane" spacing="12" prefWidth="320" styleClass="left-pane">
+            <padding>
+                <Insets top="12" right="12" bottom="12" left="12"/>
+            </padding>
+
+            <Label text="SimpleHTTP Browser" styleClass="app-title"/>
+
+            <VBox spacing="6" styleClass="control-group">
+                <Label text="Enter URL" styleClass="field-label"/>
+                <TextField fx:id="urlField" promptText="example.com or https://example.com"/>
+
+                <HBox spacing="8">
+                    <Label text="Method:" styleClass="field-label"/>
+                    <ComboBox fx:id="methodBox" prefWidth="140"/>
+                    <Button text="Send" onAction="#onSendRequest" styleClass="primary-button"/>
+                </HBox>
+            </VBox>
+
+            <VBox spacing="6" fx:id="postBox" visible="false" managed="false" styleClass="control-group">
+                <Label text="POST Body" styleClass="field-label"/>
+                <TextArea fx:id="postBodyArea" prefRowCount="5" wrapText="true"/>
+            </VBox>
+
+            <Separator/>
+
+            <Label text="Info" styleClass="section-title"/>
+            <Label fx:id="tagInfoLabel" text="Ready" wrapText="true" styleClass="info-label"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <HBox spacing="8" alignment="CENTER_RIGHT">
+                <Button text="Clear" onAction="#onClear"/>
+            </HBox>
+
+        </VBox>
+    </left>
+
+    <!-- CENTER AREA: TabPane with Browser and Source -->
+    <center>
+        <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
+
+            <Tab text="Browser View">
+                <BorderPane>
+                    <center>
+                        <WebView fx:id="webView"/>
+                    </center>
+                </BorderPane>
+            </Tab>
+
+            <Tab text="HTML Source">
+                <TextArea fx:id="responseArea" wrapText="true" styleClass="code-area"/>
+            </Tab>
+
+        </TabPane>
+    </center>
+
+</BorderPane>
